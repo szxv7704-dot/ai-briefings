@@ -1,0 +1,76 @@
+📚 오늘의 학습 주제 : 심화 24일차 · 모니터링과 로깅 실전 심화, 회로 차단기 상태를 로그와 알림으로 눈에 보이게 만들기 (2026-09-15)
+
+📌 어제 배운 내용과의 연결
+어제는 fetchWithBreaker가 실패를 5번 세면 스스로 회로 차단기를 OPEN으로 바꾸고, 신청서 제출에는 멱등성 키를 붙여 중복 접수를 막는 코드를 만들었는데, 오늘은 그 OPEN·HALF_OPEN·CLOSED 전환이 언제 일어났는지를 사람이 화면을 계속 들여다보지 않고도 알 수 있게 기록하고 알리는 법을 봅니다.
+
+🎯 오늘 배울 개념
+로깅(Logging, 프로그램이 무슨 일을 언제 했는지 시간 순서대로 남기는 기록)과 모니터링(Monitoring, 그 기록을 계속 지켜보다가 이상 징후가 보이면 사람에게 알려주는 활동)이 왜 서로 다른 두 단계이며, 로그 레벨(Log Level, 기록의 중요도를 구분하는 단계)과 외부 알림 채널을 조합해 회로 차단기 같은 상태 변화를 실제로 감시하는 원리
+
+━━━━━━━━━━━━━━━━━━━━
+
+지금까지 비서 이야기에서 비서는 전화를 걸고, 실패하면 다시 걸고, 정전이면 잠시 멈추는 판단까지 전부 혼자 조용히 해왔습니다. 문제는 이 모든 판단이 비서의 머릿속에서만 일어나고 아무 데도 남지 않는다는 점입니다. 사무실 정전이 하루에 열 번씩 반복되고 있어도, 상사는 비서에게 따로 물어보지 않는 이상 전혀 알 방법이 없습니다. 그래서 노련한 비서는 두 가지 습관을 더 들입니다. 첫째, 업무일지(로그)에 "몇 시 몇 분, 전화 성공" 같은 사소한 일은 작게 적어두고, "몇 시 몇 분, 정전 감지되어 회로 차단기 OPEN"처럼 중요한 사건은 굵은 글씨로 눈에 띄게 적어둡니다. 이렇게 사건의 중요도에 따라 기록하는 굵기를 다르게 하는 것이 로그 레벨입니다. 둘째, 업무일지를 적는 것만으로는 상사가 결국 퇴근 후 일지를 펼쳐봐야만 알 수 있으므로, 굵은 글씨로 적을 정도로 중요한 사건이 생기면 그 순간 무전기로 상사에게 바로 알립니다. 일지에 적는 것이 로깅이고, 그 일지를 계속 훑어보다가 이상 신호에 무전을 치는 것이 모니터링입니다. 둘은 짝을 이루어야 의미가 있는데, 일지만 있고 아무도 훑어보지 않으면 정전이 열 번 나도 아무도 모르고, 반대로 무전기만 있고 일지가 없으면 나중에 "어제 정전이 정확히 몇 번, 몇 시에 있었나"를 되짚어볼 방법이 없습니다.
+
+🛠 실전 연결
+어제 만든 fetchWithBreaker는 breakerState가 CLOSED에서 OPEN으로 바뀌는 순간이 코드 안에서는 일어나지만 밖으로는 전혀 드러나지 않습니다. 여비 계산기 크롬 확장의 background.js에 로그 레벨을 나누어 남기고, OPEN으로 바뀌는 굵은 글씨 사건에서만 Slack 같은 외부 채널로 무전을 치도록 조합하면, 사용자가 개발자 도구를 열어보지 않아도 인트라넷 서버 점검이 언제 시작됐는지 알 수 있습니다. 이런 식으로 여러 도구를 이어 붙이는 감각은 Claude Routines가 예약된 작업을 스스로 실행한 뒤 그 결과를 사람에게 노티피케이션으로 보고하는 구조와도 닮아 있습니다. 조용히 도는 자동화일수록, 문제가 생겼을 때만 콕 집어 알려주는 장치가 따로 있어야 한다는 점은 크롬 확장이든 Claude Routines든 똑같습니다.
+
+🔍 예시
+어제의 fetchWithBreaker 안에 로그 레벨과 Slack 알림을 더하면 이런 모습이 됩니다.
+
+  function log(level, message) {
+    const line = `[${new Date().toISOString()}] [${level}] ${message}`;
+    if (level === "ERROR") {
+      console.error(line);
+      chrome.storage.local.get({ logs: [] }, ({ logs }) => {
+        chrome.storage.local.set({ logs: [...logs.slice(-49), line] });
+      });
+      notifySlack(line);
+    } else {
+      console.log(line);
+    }
+  }
+
+  function notifySlack(text) {
+    fetch("https://hooks.slack.com/services/XXX/YYY/ZZZ", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    }).catch(() => {});
+  }
+
+  async function fetchWithBreaker(url, options = {}) {
+    if (breakerState === "OPEN") {
+      if (Date.now() - openedAt < 30000) {
+        log("WARN", `회로 차단기 열림 상태, 재시도 건너뜀: ${url}`);
+        throw new Error("회로 차단기 열림: 재시도 건너뜀");
+      }
+      breakerState = "HALF_OPEN";
+      log("INFO", "회로 차단기 반열림 상태로 전환, 한 번만 시도");
+    }
+    try {
+      const res = await fetchWithRetry(url, options);
+      if (breakerState !== "CLOSED") log("INFO", "회로 차단기 닫힘, 정상 복구");
+      breakerState = "CLOSED";
+      failCount = 0;
+      return res;
+    } catch (err) {
+      failCount++;
+      log("WARN", `요청 실패 ${failCount}/5: ${url}`);
+      if (failCount >= 5) {
+        breakerState = "OPEN";
+        openedAt = Date.now();
+        log("ERROR", `회로 차단기 열림 전환: ${url}`);
+      }
+      throw err;
+    }
+  }
+
+평소 성공이나 재시도는 조용히 console.log로만 남기는 소소한 기록(INFO, WARN)이고, 회로 차단기가 실제로 OPEN으로 바뀌는 사건만 ERROR 레벨로 골라서 chrome.storage에 최근 기록을 남기는 동시에 notifySlack으로 사람에게 바로 알리는 구조입니다.
+
+📝 오늘의 한 줄 정리
+로깅이 무슨 일이 언제 있었는지 굵기를 구분해 적어두는 업무일지라면, 모니터링은 그 일지 중 굵은 글씨만 골라 사람에게 즉시 무전을 치는 감시 활동입니다.
+
+🙋 초보자가 자주 헷갈리는 점
+로그를 남기는 것 자체를 모니터링이라고 착각하기 쉬운데, console.log나 파일에 기록만 쌓아두고 아무도 확인하지 않으면 그것은 로깅일 뿐 모니터링이 아닙니다. 또한 모든 사건을 다 ERROR로 남기고 전부 알림을 보내면, 정작 중요한 회로 차단기 OPEN 알림이 사소한 성공 로그들 사이에 파묻혀 버리므로, 로그 레벨을 신중하게 나누는 것이 알림을 아예 안 만드는 것만큼이나 중요합니다.
+
+💬 내일 예고
+내일은 심화 25일차이자 심화 단계의 마지막 날로, 지금까지 심화 25일간 다시 다진 트리거·워크플로우부터 회로 차단기·로깅까지의 개념을 여비 계산기와 크롬 확장이라는 하나의 실제 배포물로 엮어 전체 흐름을 복습하고, 다음으로 나아갈 방향을 제시합니다.
