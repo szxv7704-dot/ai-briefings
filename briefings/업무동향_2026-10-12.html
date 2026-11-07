@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>업무동향 브리핑 · 2026-10-12</title>
+<style>
+  :root{
+    /* 노트(종이) 테마 — 저시력 사용자도 편하게 읽을 수 있도록 고대비 우선 */
+    --bg: #f6f2e7;         /* 종이 바탕 */
+    --bg-raised: #fffdf7;  /* 카드/입력요소용 밝은 종이 */
+    --fg: #14100c;         /* 본문 검정 */
+    --fg-dim: #4a453e;     /* 보조 텍스트 (충분한 대비 유지) */
+    --rule: #d9d0ba;       /* 종이 괘선/구분선 */
+    --accent: #35507a;     /* 표식용 (텍스트 색상에는 쓰지 않음) */
+    --clear: #2f6b46;      /* 이상무 */
+    --active: #94620a;     /* 확인 필요 */
+
+    --font-display: 'Malgun Gothic', '맑은 고딕', Georgia, serif;
+    --font-body: 'Malgun Gothic', '맑은 고딕', -apple-system, sans-serif;
+    --font-mono: Consolas, 'Courier New', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html, body{ margin:0; padding:0; }
+  html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body{
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: inherit; }
+
+  .page{
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 22px 64px;
+  }
+
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .kicker::before{
+    content:"";
+    width: 8px; height: 8px;
+    background: var(--accent);
+    display:inline-block;
+  }
+  h1{
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.18;
+    margin: 0 0 4px;
+  }
+  .sub{
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--fg-dim);
+    margin-bottom: 24px;
+  }
+  .meta{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-dim);
+    margin-bottom: 22px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ---------- 오늘의 신호 요약 (시그니처) ---------- */
+  .signal-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 26px;
+  }
+  .signal-chip{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 8px 12px;
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--fg-dim);
+    flex: 1 1 140px;
+  }
+  .signal-chip .dot{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex: none;
+    background: var(--fg-dim);
+  }
+  .signal-chip.clear{ border-left-color: var(--clear); }
+  .signal-chip.clear .dot{ background: var(--clear); }
+  .signal-chip.active{ border-left-color: var(--active); }
+  .signal-chip.active .dot{ background: var(--active); }
+  .signal-chip .label{ color: var(--fg); }
+  .signal-chip .status{ color: var(--fg-dim); margin-left: auto; white-space: nowrap; }
+
+  /* ---------- 달력 ---------- */
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  /* ---------- 본문 (노트 카드) ---------- */
+  .content{
+    position: relative;
+    font-size: 13pt;
+    line-height: 1.85;
+    white-space: normal;
+    color: var(--fg);
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 22px 20px 24px 30px;
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+    min-width: 0;
+  }
+  /* 노트 느낌: 왼쪽 여백선 */
+  .content::before{
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 18px;
+    width: 1px;
+    background: var(--rule);
+  }
+  .content p{
+    margin: 0;
+    /* 긴 URL 등이 박스를 벗어나지 않도록 강제 줄바꿈 */
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    min-width: 0;
+  }
+
+  /* 상위항목: 큰 분류 (📰 🏫 ⚖️ 📣) — 15pt, 굵게 */
+  .content p.section-head{
+    font-weight: 700;
+    font-size: 15pt;
+    color: var(--fg);
+    margin-top: 28px;
+    margin-bottom: 8px;
+    padding-left: 10px;
+    border-left: 4px solid var(--accent);
+  }
+  .content p.section-head:first-child{ margin-top: 0; }
+
+  /* 중위항목: 개별 사례 (▶ ...) — 13pt, 굵게 */
+  .content p.item-top{
+    font-weight: 600;
+    font-size: 13pt;
+    color: var(--fg);
+    margin-top: 14px;
+  }
+
+  /* 하위항목: 세부 내용 (  - ...) — 11pt, 보통 굵기, 들여쓰기 */
+  .content p.item-sub{
+    font-weight: 400;
+    font-size: 11pt;
+    color: var(--fg-dim);
+    padding-left: 1.4em;
+    margin-top: 2px;
+  }
+
+  .content p.item-top a,
+  .content p.item-sub a,
+  .content p a{
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .content p a:visited{ color: #6a4f8a; }
+  .content .divider{ height: 0; margin: 18px 0; border-top: 1px solid var(--rule); }
+  .content .footer-link{ background: var(--bg-raised); }
+
+  .footer-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 32px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-decoration: none;
+    padding: 9px 14px;
+    border: 1px solid var(--rule);
+    color: var(--fg);
+  }
+  .footer-link:hover{ border-color: var(--accent); color: var(--accent); }
+
+  .status{ font-family: var(--font-mono); font-size: 13px; padding: 14px 0; color: var(--fg-dim); }
+  .status.error{ color: #a3271e; }
+
+  
+  @keyframes pulse{ 0%,100%{ opacity: 0.5; } 50%{ opacity: 1; } }
+  @media (prefers-reduced-motion: reduce){ .skeleton{ animation: none; } }
+
+  @media (max-width: 480px){
+    .page{ padding: 30px 16px 48px; }
+    h1{ font-size: 25px; }
+    .signal-chip{ flex-basis: 100%; }
+  }
+
+  .page{ position: relative; }
+  @media (max-width: 480px){
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="kicker">업무동향 브리핑</div>
+  <h1>유초등특수교육과 업무동향</h1>
+  <div class="sub">뉴스 · 타시도 정책 · 법령동향 · 언론 모니터링</div>
+  <div class="meta">2026.10.12 (월)</div>
+
+  <div class="content" id="content">
+<pre id="raw" style="display:none">전북특별자치도교육청 유초등특수교육과 일일 업무동향
+기준일 : 2026-10-12(월), 수록범위 2026-10-05 ~ 2026-10-12
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. 📰 주요 동향
+
+▶ (후속) 「지방교육재정교부금법」 개정안, 어린이집을 교부금 지원대상으로 명시 - 교부율 20.79%→21.79%, 어린이집총연합회 환영 성명
+  - 내용 : 한정애 의원이 대표발의한 개정안은 「영유아보육법」상 어린이집을 지방교육재정교부금 지원대상으로 명시하고, 교부율을 내국세 총액의 20.79%에서 21.79%로 1%p 인상하는 내용을 담았다. 한국어린이집총연합회(회장 임진숙)는 10. 8. 환영 성명을 내고, 0~2세를 포함한 영유아 보육·교육 업무가 보건복지부에서 교육부로 이관되면서 추가 소요가 5조 원을 넘는다고 추산하며 기존 교육예산 재배분이 아닌 신규 재원 확보가 필요하다고 밝혔다.
+  - 관련업무 : 유보통합팀(유보통합 기본계획, 어린이집 급·간식비, 교육청-지자체 협력) / 학사지원팀(3~5세 누리과정비)
+  - 시사점 : 교부율 인상 없이 이관이 진행되면 유보통합 소요가 기존 유·초·중등 사업비를 잠식하는 구조여서, 전북형 영유아학교·거점 돌봄기관(다봄) 확대분의 연도별 소요 추계를 선제적으로 정리해 둘 필요가 있다.
+  - 링크 : https://ibabynews.com/news/articleView.html?idxno=155111
+
+▶ 공소청, '교권보호단 1호' 부천오정초 교사 아동학대 혐의 불기소 - "정당한 생활지도가 형사책임으로 이어져선 안 된다"
+  - 내용 : 인천지방공소청 부천지청은 아동 간 다툼을 중재하는 과정에서 학부모로부터 형사 고소와 민사소송을 당한 부천오정초 교사 A씨에 대해 아동학대처벌법 위반 혐의 불기소 처분을 내렸다. 경기도교육청은 이 사안을 교권보호단 '1호 사안'으로 지정하고 해당 학부모를 경찰에 고발한 바 있으며, 결정 직후 논평을 내 "교사의 정당한 생활지도가 부당한 형사책임으로 이어져서는 안 된다는 원칙을 재확인한 것"이라고 평가했다.
+  - 관련업무 : 초등교육과정팀(학사관리) / 특수교육팀(장애학생 인권, 학대 신고의무자교육)
+  - 시사점 : 교육청이 개별 사안을 지정·지원하는 방식이 불기소라는 결과로 이어진 사례로, 초등 저학년·특수학급 생활지도 과정에서 아동학대 신고가 발생할 경우의 법률·심리 지원 절차를 과 차원에서 정리해 안내할 시점이다.
+  - 링크 : https://www.ytn.co.kr/_ln/0103_202610082155092505
+
+▶ (후속) '초1·2 오후 3시 하교' 철회 움직임에 학부모 단체 반론 - "초등 사교육 참여 84.4%, 예비 초1 학부모 83.6%가 방과후 희망"
+  - 내용 : 10. 10. 주간경향 칼럼에서 정치하는엄마들 활동가 장하나는 국가교육위원회가 정책포럼까지 공동 개최하고 발전계획 초안에 시행 연도를 담았음에도 3시 하교를 철회하려는 것은 자기 작업을 부인하는 것이라고 비판했다. 우리 초등 수업시간이 경제협력개발기구(OECD) 평균을 크게 밑도는 상황에서 수업시간 축소는 교육격차를 키우며, 초등 사교육 참여율 84.4%가 이미 그 공백의 비용을 가계가 치르고 있음을 보여준다고 주장했다. 2024년 교육부 조사에서 예비 초1 학부모 83.6%가 방과후 프로그램을 원했다는 수치를 들어, 철회든 추진이든 학부모 의견 수렴이 선행돼야 한다고 요구했다.
+  - 관련업무 : 초등교육과정팀(학사일정, 교육과정 편성·운영) / 유아교육과정팀(유·초 연계 5세 이음교육) / 특수교육팀(특수교육대상자 늘봄학교)
+  - 시사점 : 교원단체의 '철회' 요구와 학부모 단체의 '수업시간 축소 반대'가 정면으로 갈리는 사안이므로, 전북 초등 학사일정·돌봄 수요조사 설계 시 양측 근거를 함께 확인해 어느 방향으로 결정되더라도 설명 가능한 자료를 갖춰 둘 필요가 있다.
+  - 링크 : https://weekly.khan.co.kr/article/202610100600041/
+
+▶ 국회 교육위원회, 10. 12. 소관기관 국정감사 - 한국영유아보육·교육진흥원·한국교육학술정보원 등 13개 기관
+  - 내용 : 국회 교육위원회는 10. 12. 오전 10시 국회에서 한국영유아보육·교육진흥원, 한국교육학술정보원(KERIS), 한국교육시설안전원, 국가평생교육진흥원, 한국학중앙연구원 등 13개 소관기관을 대상으로 국정감사를 실시한다.
+  - 관련업무 : 유보통합팀(어린이집 평가, 영유아통합정보시스템) / 유아교육과정팀(누리과정 포털, 유아 나이스) / 초등장학팀(국가기초학력포털)
+  - 시사점 : 유보통합 지원기관과 교육정보화 기관에 대한 지적사항은 전북이 위탁·연계해 운영하는 평가·포털·시스템 업무에 곧바로 반영되므로, 질의 내용과 기관 답변을 확인해 후속 조치 소요를 미리 가늠해 둘 사안이다.
+  - 링크 : https://newstnt.com/news/articleView.html?idxno=721975
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2. 🏫 타시도 정책 참고
+
+▶ 세종특별자치시교육청 · 초등 성취기준 이수 확인 학력평가
+  - 내용 : 강미애 교육감은 10. 6. 취임 100일 브리핑에서 2026년 12월 초등 5~6학년 국어·수학 성취기준 이수 확인 평가를 시행하고, 2027년부터 3~6학년으로 확대해 학기별 1회 실시한다고 밝혔다. 한국교육과정평가원과 연계한 문항은행에서 학년·교과별 2~3종 평가지를 제공하고 학교 자체 문항도 함께 쓸 수 있으며, 학생에게는 문항별 결과와 영역별 성취율을 제공하되 학생 서열화나 학교 간 비교에는 사용하지 않는다고 못 박았다.
+  - 적용점 : 전북 초등 학력신장 기본계획과 기본학력 기준에 '시도 공통 문항은행 + 학교 선택 활용'이라는 이원 구조를 참고할 수 있다. 특히 서열화 방지 장치(학교 간 비교 금지 명시, 개인별 결과만 제공)를 사업 설계 단계에서 함께 공표하는 방식은 학력 진단 확대 시 현장 수용도를 높이는 선례가 된다.
+  - 링크 : https://www.edupress.kr/news/articleView.html?idxno=30503
+
+▶ 경상북도 고령교육지원청 · 특수교육대상학생 '드림 업(UP)' 진로직업 심화 프로그램
+  - 내용 : 10. 6.부터 11. 26.까지 관내 중·고등학교 특수학급 학생 14명을 교육지원청 창의영재실로 모아 외부 전문강사가 8회기 실습 중심으로 지도한다. 가죽공예(네임택·카드지갑·키링)와 정리수납(교실·침구·주방·신발장) 등 일상생활과 직접 연결되는 직무를 다루며, 학생별 수준에 맞춘 단계별 지도로 운영한다.
+  - 적용점 : 학교별로는 인원이 적어 개설이 어려운 심화 직업교육을 교육지원청이 직접 모아 운영하는 방식으로, 전북의 특수교육지원센터·직업중점·거점학교 중심 진로직업 체계에 '교육지원청 단위 소인수 통합 운영' 모델을 보탤 수 있다. 농산어촌 소규모 특수학급이 많은 지역에 우선 적용할 여지가 있다.
+  - 링크 : https://www.skbnews.kr/news/article.html?no=80093
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3. ⚖️ 법령·조례 동향
+
+▶ (후속) 「전북특별자치도교육청 유아교육 진흥 조례안」(조항 미확인) · 제432회 전북특별자치도의회 임시회 10. 12. 개회
+  - 내용 : 전북특별자치도의회(의장 김희수)는 10. 12.부터 10. 23.까지 12일간 제432회 임시회를 열어 조례안 33건, 규칙안 1건, 2027년 예산 편성 관련 동의안 103건 등 접수 의안 137건을 상임위원회별로 심사한다. 유아교육 진흥 조례안이 대표 조례안으로 제시됐고 가족돌봄학생 교육지원 관련 안건도 함께 다뤄진다. 도정·교육·학예 행정 질문은 10. 13.~14. 이틀간 의원 9명이 진행하며, 제13대 의회 출범 후 첫 행정 질문이다. 10. 23. 제4차 본회의에서 심사·의결된 의안을 처리한다.
+  - 영향 : 유아교육 진흥 조례가 제정되면 유아교육발전 5개년 계획·전북유아교육계획 수립과 유아교육위원회 운영에 조례상 근거가 생기며, 10. 13.부터 시작되는 교육행정 질문에 유아·특수 분야 질의 대응 자료가 즉시 필요하다.
+  - 링크 : https://www.ajunews.com/view/20261010090848888
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4. 📣 전북 지역 보도
+
+▶ "공부 못한다" 반 학생들 앞에서 한 달간 반복한 초등 담임교사, 벌금 500만원 확정 · 전북미래교육신문
+  - 논조 : 중립 - 판결 법리(정서적 학대는 실제 피해 없이 '위험 발생'만으로도 성립, 학대 고의 아닌 미필적 인식으로 충분)와 양형 요소를 해설하고, 7월 대법원이 1회성 부적절 발언을 학대로 보지 않은 사례와 대비해 반복성·기간이 판단을 갈랐다고 설명했다.
+  - 대응 : 대응 불필요 - 다만 초등 담임·특수학급 교사 대상 생활지도 연수에서 '정당한 생활지도'와 정서적 학대의 경계 사례로 활용할 가치가 있다.
+  - 링크 : https://edujb.com/news/articleView.html?idxno=9429
+
+▶ 고창초 조리실무사 공백에 '대체식' 급식… 정책국장 "교육청이 발벗고 나서야" · 전북미래교육신문
+  - 논조 : 비판적 - 9. 1. 자 결원이 한 달 넘게 충원되지 않아 학교가 10. 7.·13.·15. 빵·간식 대체식을 안내한 사실과, 이영환 정책국장이 10. 6. 주례회의에서 교육청 대응이 "너무 미적되고 있다"고 지적한 점을 함께 전했다. 올해 공개채용에서 조리실무사 162명 계획 중 118명만 채용돼 44명이 미충원됐고 고창은 5명 중 2명, 순창은 4명 중 1명만 채웠다는 노조 집계도 실었다.
+  - 대응 : 급식 인력은 타 부서 소관이나, 대체식 운영일의 초등 정규 수업·방과후 운영에 지장이 없는지 해당 학교·교육지원청과 학사 운영 상황을 확인할 필요가 있다.
+  - 링크 : https://edujb.com/news/articleView.html?idxno=9433
+</pre>
+  </div>
+</div>
+
+<script>
+(function(){
+  const SECTIONS = ["📰", "🏫", "⚖️", "📣"];
+
+  function escapeHtml(str){
+    return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+              .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+
+  function linkifyHtml(escapedLine){
+    return escapedLine.replace(/(https?:\/\/[^\s<]+)/g, function(url){
+      const m = url.match(/[),.:;!?]+$/);
+      const trailing = m ? m[0] : "";
+      const clean = trailing ? url.slice(0, -trailing.length) : url;
+      return '<a href="' + clean + '" target="_blank" rel="noopener noreferrer">' + clean + '</a>' + trailing;
+    });
+  }
+
+  function renderPlainText(raw){
+    return raw.replace(/\r\n/g, "\n").split("\n").map(function(line){
+      const t = line.trim();
+      if (t === "") return '<div class="blank"></div>';
+      if (/^[━─=-]{5,}$/.test(t)) return '<div class="divider"></div>';
+      if (SECTIONS.some(function(e){ return t.startsWith(e); }))
+        return '<p class="section-head">' + escapeHtml(line) + '</p>';
+      if (t.startsWith("▶"))
+        return '<p class="item-top">' + linkifyHtml(escapeHtml(line)) + '</p>';
+      const lead = line.length - line.trimStart().length;
+      if (lead >= 2 && /^- ?/.test(t))
+        return '<p class="item-sub">' + linkifyHtml(escapeHtml(t)) + '</p>';
+      return '<p>' + linkifyHtml(escapeHtml(line)) + '</p>';
+    }).join("");
+  }
+
+  // 본문은 이미 이 파일 안에 포함되어 있으므로 외부 통신이 전혀 없다.
+  const raw = document.getElementById("raw").textContent;
+  document.getElementById("content").innerHTML = renderPlainText(raw);
+})();
+</script>
+</body>
+</html>
