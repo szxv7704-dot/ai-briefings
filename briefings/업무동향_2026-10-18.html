@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>업무동향 브리핑 · 2026-10-18</title>
+<style>
+  :root{
+    /* 노트(종이) 테마 — 저시력 사용자도 편하게 읽을 수 있도록 고대비 우선 */
+    --bg: #f6f2e7;         /* 종이 바탕 */
+    --bg-raised: #fffdf7;  /* 카드/입력요소용 밝은 종이 */
+    --fg: #14100c;         /* 본문 검정 */
+    --fg-dim: #4a453e;     /* 보조 텍스트 (충분한 대비 유지) */
+    --rule: #d9d0ba;       /* 종이 괘선/구분선 */
+    --accent: #35507a;     /* 표식용 (텍스트 색상에는 쓰지 않음) */
+    --clear: #2f6b46;      /* 이상무 */
+    --active: #94620a;     /* 확인 필요 */
+
+    --font-display: 'Malgun Gothic', '맑은 고딕', Georgia, serif;
+    --font-body: 'Malgun Gothic', '맑은 고딕', -apple-system, sans-serif;
+    --font-mono: Consolas, 'Courier New', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html, body{ margin:0; padding:0; }
+  html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body{
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: inherit; }
+
+  .page{
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 22px 64px;
+  }
+
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .kicker::before{
+    content:"";
+    width: 8px; height: 8px;
+    background: var(--accent);
+    display:inline-block;
+  }
+  h1{
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.18;
+    margin: 0 0 4px;
+  }
+  .sub{
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--fg-dim);
+    margin-bottom: 24px;
+  }
+  .meta{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-dim);
+    margin-bottom: 22px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ---------- 오늘의 신호 요약 (시그니처) ---------- */
+  .signal-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 26px;
+  }
+  .signal-chip{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 8px 12px;
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--fg-dim);
+    flex: 1 1 140px;
+  }
+  .signal-chip .dot{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex: none;
+    background: var(--fg-dim);
+  }
+  .signal-chip.clear{ border-left-color: var(--clear); }
+  .signal-chip.clear .dot{ background: var(--clear); }
+  .signal-chip.active{ border-left-color: var(--active); }
+  .signal-chip.active .dot{ background: var(--active); }
+  .signal-chip .label{ color: var(--fg); }
+  .signal-chip .status{ color: var(--fg-dim); margin-left: auto; white-space: nowrap; }
+
+  /* ---------- 달력 ---------- */
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  /* ---------- 본문 (노트 카드) ---------- */
+  .content{
+    position: relative;
+    font-size: 13pt;
+    line-height: 1.85;
+    white-space: normal;
+    color: var(--fg);
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 22px 20px 24px 30px;
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+    min-width: 0;
+  }
+  /* 노트 느낌: 왼쪽 여백선 */
+  .content::before{
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 18px;
+    width: 1px;
+    background: var(--rule);
+  }
+  .content p{
+    margin: 0;
+    /* 긴 URL 등이 박스를 벗어나지 않도록 강제 줄바꿈 */
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    min-width: 0;
+  }
+
+  /* 상위항목: 큰 분류 (📰 🏫 ⚖️ 📣) — 15pt, 굵게 */
+  .content p.section-head{
+    font-weight: 700;
+    font-size: 15pt;
+    color: var(--fg);
+    margin-top: 28px;
+    margin-bottom: 8px;
+    padding-left: 10px;
+    border-left: 4px solid var(--accent);
+  }
+  .content p.section-head:first-child{ margin-top: 0; }
+
+  /* 중위항목: 개별 사례 (▶ ...) — 13pt, 굵게 */
+  .content p.item-top{
+    font-weight: 600;
+    font-size: 13pt;
+    color: var(--fg);
+    margin-top: 14px;
+  }
+
+  /* 하위항목: 세부 내용 (  - ...) — 11pt, 보통 굵기, 들여쓰기 */
+  .content p.item-sub{
+    font-weight: 400;
+    font-size: 11pt;
+    color: var(--fg-dim);
+    padding-left: 1.4em;
+    margin-top: 2px;
+  }
+
+  .content p.item-top a,
+  .content p.item-sub a,
+  .content p a{
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .content p a:visited{ color: #6a4f8a; }
+  .content .divider{ height: 0; margin: 18px 0; border-top: 1px solid var(--rule); }
+  .content .footer-link{ background: var(--bg-raised); }
+
+  .footer-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 32px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-decoration: none;
+    padding: 9px 14px;
+    border: 1px solid var(--rule);
+    color: var(--fg);
+  }
+  .footer-link:hover{ border-color: var(--accent); color: var(--accent); }
+
+  .status{ font-family: var(--font-mono); font-size: 13px; padding: 14px 0; color: var(--fg-dim); }
+  .status.error{ color: #a3271e; }
+
+  
+  @keyframes pulse{ 0%,100%{ opacity: 0.5; } 50%{ opacity: 1; } }
+  @media (prefers-reduced-motion: reduce){ .skeleton{ animation: none; } }
+
+  @media (max-width: 480px){
+    .page{ padding: 30px 16px 48px; }
+    h1{ font-size: 25px; }
+    .signal-chip{ flex-basis: 100%; }
+  }
+
+  .page{ position: relative; }
+  @media (max-width: 480px){
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="kicker">업무동향 브리핑</div>
+  <h1>유초등특수교육과 업무동향</h1>
+  <div class="sub">뉴스 · 타시도 정책 · 법령동향 · 언론 모니터링</div>
+  <div class="meta">2026.10.18 (일)</div>
+
+  <div class="content" id="content">
+<pre id="raw" style="display:none">전북특별자치도교육청 유초등특수교육과 일일 업무동향
+기준일 : 2026. 10. 18.(일)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. 📰 주요 동향
+
+▶ (후속) 초등 저학년 '3시 하교' 근거 반박 논문 공개 — "경제협력개발기구(OECD) 초등 평균은 845시간 아닌 804시간, 격차 190→149시간"
+  - 내용 : 김민규 본원초등학교 교사가 한국교원교육학회 학술지 『한국교원교육연구』 제43권 제3호에 실은 논문 '돌봄 공백 해소 수단으로서 정규 수업시간 확대는 타당한가'가 10. 16. 공개됐다. 국회미래연구원이 제시한 OECD 초등 평균 수업시간 845시간은 OECD가 공표한 2025년 통계 804시간과 달라, 한국(655시간)과의 격차가 190시간이 아닌 149시간이라는 지적이다. OECD '의도된 수업시간'은 방과후·돌봄을 제외한 정규 교육과정 배정 시간이므로 학교 돌봄 기능의 지표로 쓰기 어렵고, 한국의 655시간은 40분 단위 982교시를 60분으로 환산한 값이라는 점도 함께 짚었다. 2023년 한국 초등 학급당 학생 수는 21.6명으로 OECD 평균 20.6명보다 많으며, 선행조사에서 교사 92.7%가 저학년 하교시간 연장에 반대한 것으로 나타났다. 논문은 늘봄학교 질 개선, 학교 밖 돌봄 인프라 확충, 육아기 근로시간 단축을 우선 검토할 것을 제안했다. 국가교육위원회는 다음 달 공론화 절차 착수 여부를 결정한다.
+  - 관련업무 : 초등교육과정팀(초등 교육과정 편성·운영 지침, 학사일정), 특수교육팀(특수교육대상자 늘봄학교), 유아교육과정팀(유치원 방과후 과정·돌봄교실)
+  - 시사점 : 공론화가 개시되면 수업시수 확대 여부가 초등 교육과정 편성·운영 지침과 학사일정 전반에 직결되므로, 도내 초등 하교시각·수업시수 현황과 늘봄 수요 자료를 선제적으로 정리해 둘 필요가 있다.
+  - 링크 : https://www.hangyo.com/news/article.html?no=109684
+
+▶ 26년 새 초등 학급당 학생 수 35.8명→18.6명, 36명 이상 학급은 68.9%→0.04%
+  - 내용 : 2000년과 2026년 교육통계를 비교하면 초등 학급당 학생 수는 35.8명에서 18.6명으로, 학교당 학생 수는 763.2명에서 358.5명으로 53.0% 감소했고, 교원 1인당 학생 수는 28.7명에서 11.6명으로 59.6% 줄었다. 20명 이하 학급 비중은 11.9%에서 48.8%로 늘었고 36명 이상 학급은 68.9%에서 0.04%(46개 학급)로 사실상 소멸했다. 같은 기간 초등학교 수는 수도권 1,541개교→2,246개교(45.7% 증가), 비수도권 3,726개교→3,945개교(5.9% 증가)로 늘었으나 학생 수는 수도권 41.2%, 비수도권 48.0% 감소해 비수도권 감소폭이 더 컸다.
+  - 관련업무 : 초등교육과정팀(초등 교육과정 편성·운영), 초등장학팀(1수업 2교사제 협력수업, 학교평가), 학사지원팀(초등 학적)
+  - 시사점 : 소규모 학급이 이미 상수가 된 만큼, 학급 규모를 전제로 설계된 1수업 2교사제·기초학력 협력교(강)사 배치 기준과 소규모 유치원 공동교육과정 운영 단위를 재점검할 근거 자료로 활용할 수 있다.
+  - 링크 : https://edujb.com/news/articleView.html?idxno=9450
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2. 🏫 타시도 정책 참고
+
+▶ 대전광역시교육청 · 특수학교 초등방과후·돌봄 운영 사례 나눔
+  - 내용 : 10. 16. 특수학교장·늘봄지원실장·방과후 담당자 등 30여 명이 참석한 가운데 '2026학년도 특수학교 초등방과후·돌봄 운영 사례 나눔'을 개최했다. 서울정진학교 늘봄지원실장이 타 시도 우수사례를 발표하고, 학교별 사례 발표와 평가 협의회를 통해 현장 애로사항과 업무 부담 경감 방안을 논의했다. 2027년부터 초등방과후·돌봄 지원 대상이 초등학교 4학년까지 단계적으로 확대되는 데 대한 준비가 배경으로 제시됐다.
+  - 적용점 : 특수학교 늘봄 운영교 간 사례 공유 협의회를 연 1회 정례화하고, 지원 대상 초4 확대에 대비해 특수학교별 공간·늘봄실무사·돌봄전담사 소요를 2027년 수요조사 단계에서 미리 반영할 수 있다.
+  - 링크 : https://www.newspim.com/news/view/20261016000966
+
+▶ 충청남도아산교육지원청 · 소규모 유치원 연합 놀이 축제 '함께라서 더 반짝이는 날'
+  - 내용 : 10. 12.~14. 3일간 관내 소규모 공립유치원 19개원의 유아 153명과 보호자 81명이 참여하는 연합 놀이 축제를 운영했다. 풍선 팡팡·도넛 굴리기·줄다리기·협동 달리기 등 경쟁보다 협력에 중점을 둔 신체활동으로 구성했으며, 지난해 행사를 보호자가 함께하는 가족 참여형으로 확대했다. 단일 기관이 감당하기 어려운 프로그램을 기관 간 자원 결합으로 운영한 점이 현장 평가로 제시됐다.
+  - 적용점 : 소규모 유치원 공동교육과정·한울타리유치원 운영에 보호자 동반 연합 행사를 한 축으로 추가하면, 유아 대상 프로그램 규모를 키우는 동시에 소규모 원 학부모 네트워크를 형성하는 효과를 함께 얻을 수 있다.
+  - 링크 : https://www.jungannews.com/news/article.html?no=867722
+</pre>
+  </div>
+</div>
+
+<script>
+(function(){
+  const SECTIONS = ["📰", "🏫", "⚖️", "📣"];
+
+  function escapeHtml(str){
+    return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+              .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+
+  function linkifyHtml(escapedLine){
+    return escapedLine.replace(/(https?:\/\/[^\s<]+)/g, function(url){
+      const m = url.match(/[),.:;!?]+$/);
+      const trailing = m ? m[0] : "";
+      const clean = trailing ? url.slice(0, -trailing.length) : url;
+      return '<a href="' + clean + '" target="_blank" rel="noopener noreferrer">' + clean + '</a>' + trailing;
+    });
+  }
+
+  function renderPlainText(raw){
+    return raw.replace(/\r\n/g, "\n").split("\n").map(function(line){
+      const t = line.trim();
+      if (t === "") return '<div class="blank"></div>';
+      if (/^[━─=-]{5,}$/.test(t)) return '<div class="divider"></div>';
+      if (SECTIONS.some(function(e){ return t.startsWith(e); }))
+        return '<p class="section-head">' + escapeHtml(line) + '</p>';
+      if (t.startsWith("▶"))
+        return '<p class="item-top">' + linkifyHtml(escapeHtml(line)) + '</p>';
+      const lead = line.length - line.trimStart().length;
+      if (lead >= 2 && /^- ?/.test(t))
+        return '<p class="item-sub">' + linkifyHtml(escapeHtml(t)) + '</p>';
+      return '<p>' + linkifyHtml(escapeHtml(line)) + '</p>';
+    }).join("");
+  }
+
+  // 본문은 이미 이 파일 안에 포함되어 있으므로 외부 통신이 전혀 없다.
+  const raw = document.getElementById("raw").textContent;
+  document.getElementById("content").innerHTML = renderPlainText(raw);
+})();
+</script>
+</body>
+</html>
