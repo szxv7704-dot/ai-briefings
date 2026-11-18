@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>업무동향 브리핑 · 2026-11-17</title>
+<style>
+  :root{
+    /* 노트(종이) 테마 — 저시력 사용자도 편하게 읽을 수 있도록 고대비 우선 */
+    --bg: #f6f2e7;         /* 종이 바탕 */
+    --bg-raised: #fffdf7;  /* 카드/입력요소용 밝은 종이 */
+    --fg: #14100c;         /* 본문 검정 */
+    --fg-dim: #4a453e;     /* 보조 텍스트 (충분한 대비 유지) */
+    --rule: #d9d0ba;       /* 종이 괘선/구분선 */
+    --accent: #35507a;     /* 표식용 (텍스트 색상에는 쓰지 않음) */
+    --clear: #2f6b46;      /* 이상무 */
+    --active: #94620a;     /* 확인 필요 */
+
+    --font-display: 'Malgun Gothic', '맑은 고딕', Georgia, serif;
+    --font-body: 'Malgun Gothic', '맑은 고딕', -apple-system, sans-serif;
+    --font-mono: Consolas, 'Courier New', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html, body{ margin:0; padding:0; }
+  html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body{
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: inherit; }
+
+  .page{
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 22px 64px;
+  }
+
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .kicker::before{
+    content:"";
+    width: 8px; height: 8px;
+    background: var(--accent);
+    display:inline-block;
+  }
+  h1{
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.18;
+    margin: 0 0 4px;
+  }
+  .sub{
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--fg-dim);
+    margin-bottom: 24px;
+  }
+  .meta{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-dim);
+    margin-bottom: 22px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ---------- 오늘의 신호 요약 (시그니처) ---------- */
+  .signal-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 26px;
+  }
+  .signal-chip{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 8px 12px;
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--fg-dim);
+    flex: 1 1 140px;
+  }
+  .signal-chip .dot{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex: none;
+    background: var(--fg-dim);
+  }
+  .signal-chip.clear{ border-left-color: var(--clear); }
+  .signal-chip.clear .dot{ background: var(--clear); }
+  .signal-chip.active{ border-left-color: var(--active); }
+  .signal-chip.active .dot{ background: var(--active); }
+  .signal-chip .label{ color: var(--fg); }
+  .signal-chip .status{ color: var(--fg-dim); margin-left: auto; white-space: nowrap; }
+
+  /* ---------- 달력 ---------- */
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  /* ---------- 본문 (노트 카드) ---------- */
+  .content{
+    position: relative;
+    font-size: 13pt;
+    line-height: 1.85;
+    white-space: normal;
+    color: var(--fg);
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 22px 20px 24px 30px;
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+    min-width: 0;
+  }
+  /* 노트 느낌: 왼쪽 여백선 */
+  .content::before{
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 18px;
+    width: 1px;
+    background: var(--rule);
+  }
+  .content p{
+    margin: 0;
+    /* 긴 URL 등이 박스를 벗어나지 않도록 강제 줄바꿈 */
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    min-width: 0;
+  }
+
+  /* 상위항목: 큰 분류 (📰 🏫 ⚖️ 📣) — 15pt, 굵게 */
+  .content p.section-head{
+    font-weight: 700;
+    font-size: 15pt;
+    color: var(--fg);
+    margin-top: 28px;
+    margin-bottom: 8px;
+    padding-left: 10px;
+    border-left: 4px solid var(--accent);
+  }
+  .content p.section-head:first-child{ margin-top: 0; }
+
+  /* 중위항목: 개별 사례 (▶ ...) — 13pt, 굵게 */
+  .content p.item-top{
+    font-weight: 600;
+    font-size: 13pt;
+    color: var(--fg);
+    margin-top: 14px;
+  }
+
+  /* 하위항목: 세부 내용 (  - ...) — 11pt, 보통 굵기, 들여쓰기 */
+  .content p.item-sub{
+    font-weight: 400;
+    font-size: 11pt;
+    color: var(--fg-dim);
+    padding-left: 1.4em;
+    margin-top: 2px;
+  }
+
+  .content p.item-top a,
+  .content p.item-sub a,
+  .content p a{
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .content p a:visited{ color: #6a4f8a; }
+  .content .divider{ height: 0; margin: 18px 0; border-top: 1px solid var(--rule); }
+  .content .footer-link{ background: var(--bg-raised); }
+
+  .footer-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 32px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-decoration: none;
+    padding: 9px 14px;
+    border: 1px solid var(--rule);
+    color: var(--fg);
+  }
+  .footer-link:hover{ border-color: var(--accent); color: var(--accent); }
+
+  .status{ font-family: var(--font-mono); font-size: 13px; padding: 14px 0; color: var(--fg-dim); }
+  .status.error{ color: #a3271e; }
+
+  
+  @keyframes pulse{ 0%,100%{ opacity: 0.5; } 50%{ opacity: 1; } }
+  @media (prefers-reduced-motion: reduce){ .skeleton{ animation: none; } }
+
+  @media (max-width: 480px){
+    .page{ padding: 30px 16px 48px; }
+    h1{ font-size: 25px; }
+    .signal-chip{ flex-basis: 100%; }
+  }
+
+  .page{ position: relative; }
+  @media (max-width: 480px){
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="kicker">업무동향 브리핑</div>
+  <h1>유초등특수교육과 업무동향</h1>
+  <div class="sub">뉴스 · 타시도 정책 · 법령동향 · 언론 모니터링</div>
+  <div class="meta">2026.11.17 (화)</div>
+
+  <div class="content" id="content">
+<pre id="raw" style="display:none">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📰 주요 동향
+▶ (후속) 국회 교육위원회, 2027년도 교육부 예산안 3조 7,255억 원 증액 의결 — 예결위·본회의 남음
+  - 내용 : 11. 16. 오전 전체회의에서 교육부·국가교육위원회 소관 예산안과 교육부 소관 기금운용계획안, 임대형 민자사업 한도액안을 처리했다. 교육부 소관은 증액 3조 7,255억 2,900만 원, 감액 128억 1,450만 원으로 의결됐고 국가교육위원회는 4억 원이 감액됐다.
+  - 내용 : 교육급여 지급·이용권(바우처) 운영 개선 등 부대의견 27건을 함께 채택했다. 그린스마트스쿨 조성 100억 원, AI학업장려 학자금대출 이차보전 26억 6,500만 원이 집행 부진을 이유로 감액됐다. 위원회 증감액은 예산결산특별위원회 심사와 본회의 의결을 거쳐야 확정된다.
+  - 관련업무 : 전 팀(사업예산 편성), 초등장학팀·특수교육팀(교육부 특별교부금 연계 사업)
+  - 시사점 : 11. 11. 보고한 시·도교육청 2027년도 미편성 규모(전북 2,029억 원)와 맞물려, 국회 단계 증액분 중 유·초·특수 관련 항목이 교부금·특별교부금 어느 경로로 내려오는지 확인한 뒤 2027년 사업계획을 확정할 필요가 있다.
+  - 링크 : https://www.news33.net/news/articleView.html?idxno=119368
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+▶ 세종시교육청, 10년 만에 초등 기본학력평가 부활 — 12월 5·6학년 국어·수학 성취도 점검
+  - 내용 : 11. 16. 보도에 따르면 세종시교육청이 '성취기준 도달도 평가시험'을 12월 초등 5·6학년 국어·수학 과목에 시행하고, 2027년에는 3학년까지 확대해 정기 평가로 두는 방안을 검토하고 있다. 2016년 관련 평가를 폐지한 이후 10년 만의 재도입이다.
+  - 내용 : 시의회 교육안전위원회가 제3차 추가경정예산안의 평가 예산 3,800만 원을 원안 의결했으며 예산결산특별위원회 심사와 본회의 의결이 남아 있다. 강미애 교육감은 10월 기자간담회에서 "기초학력 검사는 학기 초에 하고 있고, 학생들이 지금 잘 따라오고 있는지 알고 싶어 기본학력 평가를 새롭게 실시할 계획"이라고 밝혔다.
+  - 관련업무 : 초등장학팀(초등 학력신장 기본계획, 기본학력 기준), 초등교육과정팀(초등 총괄평가, 학생평가)
+  - 시사점 : 학기 초 진단검사(기초학력)와 학기 말 성취도 점검(기본학력)을 분리하는 설계로, 전북 초등 학력신장시스템·기본학력 기준 운영에서 향상도 확인 시점을 어떻게 둘지 검토할 준거가 된다.
+  - 링크 : https://www.daejonilbo.com/news/articleView.html?idxno=2314018
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏫 타시도 정책 참고
+▶ 부산광역시교육청 · 행동중재 컨설팅 '특별지원' 창구 상시 운영
+  - 내용 : 11월부터 위기·긴급 상황에 즉시 개입하는 행동중재 컨설팅 특별지원 창구를 상시 운영한다. 요청 접수 후 2일 이내 전화로 사안을 분석해 학생 특성에 맞는 특별지원팀을 구성하고, 5일 이내 현장을 방문해 면담·점검 후 해결책을 제시하는 절차다.
+  - 내용 : 행동중재 전문 자격을 갖춘 부산특수교육지원센터 소속 전담 순회교사가 투입된다. 2025년부터 운영해 온 기존 정기지원(심층 조사로 근본 원인 해결)과 역할을 나눈 구조이며, 전체 특수교육대상학생의 72%가 일반학교에 배치된 상황에서 통합수업이 끊기지 않도록 하는 데 목적을 뒀다.
+  - 적용점 : 기존 행동중재 지원을 '정기지원'과 '긴급 특별지원'으로 분리하고 2일·5일이라는 응답 기한을 명시한 방식은, 전북 특수교육지원센터 행동중재 업무에 긴급 트랙을 신설할 때 그대로 적용할 수 있다. 전담 순회교사에게 자격요건을 두는 점도 참고가 된다.
+  - 링크 : https://www.fnnews.com/news/202611161922110667
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+▶ 경기도성남교육지원청 · 유·초 이음교육 '보호자' 연수(토요일 운영)
+  - 내용 : 11. 14.(토) 오전 10시 성남교육지원청 대강당에서 유치원·초등학교·특수학교 학부모 110명을 대상으로 '2026 유·초 이음교육 보호자 연수'를 열었다. 주제는 '현직 초등교사가 콕 짚어주는 1학년 준비의 골든타임'이다.
+  - 내용 : 교육부 유·초 이음교육 패널이자 『유·초 이음교육 HOW TO』 저자인 현직 초등교사가 강의를 맡아, 가정에서 실천할 수 있는 이음교육 사례와 체크리스트를 중심으로 진행했다. 교육장은 유치원 유아가 진학할 초등학교와의 이음교육을 계속 운영하도록 행정·재정 지원을 이어가겠다고 밝혔다.
+  - 적용점 : 교원 연수에 집중된 이음교육을 보호자 대상으로 돌리고, 맞벌이 참여를 고려해 토요일에 배치하며 현직 초등교사가 '체크리스트'를 제공하는 구성이다. 전북 유·초 연계 5세 이음교육과 유치원 부모교육을 묶어 취학 직전 시기(11~12월) 보호자 프로그램으로 설계할 수 있고, 특수학교 학부모를 같은 자리에 포함한 점은 특수교육대상유아 초등 입학적응 업무에도 적용된다.
+  - 링크 : https://www.jungbunews.com/news/articleView.html?idxno=2803741
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚖️ 법령·조례 동향
+▶ 「학교건강검사규칙」(교육부령) 일부개정령안 입법예고(조항 미확인)
+  - 내용 : 교육부가 11. 16. 입법예고를 알렸고 예고기간은 11. 17.~12. 28.(41일간)이다. 희귀질환·암·제1형 당뇨 등 중증 난치질환 학생이 정기진료로 결석하는 경우, 교육부장관이 정한 범위에서 학교장이 '질병 결석'이 아닌 '출석인정 결석'으로 처리할 수 있도록 하는 내용이다.
+  - 내용 : 학생건강기록부 민원 발급 서식을 신설하고 전자민원창구와 연계해 온라인 발급 근거를 마련했다. 그동안은 학교를 방문해야만 신청할 수 있었다. 부칙상 시행일은 2027. 3. 1.이다.
+  - 영향 : 특수교육팀 건강장애(병원학교·원격수업)·의료적 지원 대상 학생의 출결 처리 기준이 바뀌고, 초등교육과정팀 학사관리·학교생활기록부 업무와 학사지원팀 초등 학적 관리에 2027. 3. 1. 이전 안내가 필요하다.
+  - 링크 : https://www.ksw-news.com/news/articleView.html?idxno=3062589
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📣 전북 지역 보도
+▶ 전북교육청, 미취학·미인정결석 아동 취학관리 강화 — 하반기 취학관리 전담기구 회의 · 투데이안
+  - 논조 : 중립. 11. 16. 창조나래 1회의실에서 열린 '2026년 하반기 취학관리 전담기구 회의'를 사실 중심으로 전하며, 타 시·도에서 초등학교 입학연기 아동의 취학 누락 사례가 생긴 것을 배경으로 들고 기관 간 역할·협조체계 정비에 초점을 맞췄다.
+  - 논조 : 교직원·경찰·지자체 외부위원 등 위원 9명과 유관부서 담당자가 참석해 미취학 아동 취학관리, 2027년도 취학관리 개선사항, 교육청-학교-읍면동-경찰청 협력 방안을 논의했고, 읍·면·동에서 조기입학·입학연기를 신청할 때 보호자가 아동을 동반하도록 하는 방안도 협의됐다고 보도했다.
+  - 대응 : 대응 불필요. 다만 11. 11. 보고한 2027학년도 취학 일정(취학통지서 12. 3.~20., 입학 연기·조기입학 12. 31. 마감)과 맞물려 '보호자 아동 동반' 협의사항의 시행 여부·시점을 확정해 읍면동과 학교에 사전 안내할 실익이 있다.
+  - 링크 : https://www.todayan.com/news/articleView.html?idxno=637372
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+▶ (후속) 전북교육청, 2027년 본예산 4조 4,421억 원 편성 — 정책사업 3,156억 원 배분 공개 · MTN 머니투데이방송
+  - 논조 : 중립. 11. 16. 천호성 교육감 기자회견 내용을 전하며, 올해보다 16억 원 줄어든 규모에서 학생 안전·배움·교원 보호에 우선 투자한다는 기조를 그대로 소개했다.
+  - 논조 : 주요 정책사업 3,156억 원의 배분은 학생 생명·안전 및 진로·학습 지원 2,167억 원, 교원 교육활동 보호·전문성 강화 227억 원, 지역과 함께 성장하는 상생교육 762억 원이다. 상생교육에는 김제·무주·순창·부안·완주 교육혁신선도지역 지원, 전북유학 확대, 농산어촌 통학 지원 등이 포함된다. 기초학력·유아교육·특수교육·늘봄 항목은 기사에 별도로 언급되지 않았다.
+  - 대응 : 우리 과 사업이 '학생 생명·안전 및 진로·학습 지원 2,167억 원'에 어떻게 반영됐는지 항목별로 정리해, 도의회 예산심사 질의에 대비한 설명자료를 준비한다.
+  - 링크 : https://news.mtn.co.kr/article/2026111615533051853
+</pre>
+  </div>
+</div>
+
+<script>
+(function(){
+  const SECTIONS = ["📰", "🏫", "⚖️", "📣"];
+
+  function escapeHtml(str){
+    return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+              .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+
+  function linkifyHtml(escapedLine){
+    return escapedLine.replace(/(https?:\/\/[^\s<]+)/g, function(url){
+      const m = url.match(/[),.:;!?]+$/);
+      const trailing = m ? m[0] : "";
+      const clean = trailing ? url.slice(0, -trailing.length) : url;
+      return '<a href="' + clean + '" target="_blank" rel="noopener noreferrer">' + clean + '</a>' + trailing;
+    });
+  }
+
+  function renderPlainText(raw){
+    return raw.replace(/\r\n/g, "\n").split("\n").map(function(line){
+      const t = line.trim();
+      if (t === "") return '<div class="blank"></div>';
+      if (/^[━─=-]{5,}$/.test(t)) return '<div class="divider"></div>';
+      if (SECTIONS.some(function(e){ return t.startsWith(e); }))
+        return '<p class="section-head">' + escapeHtml(line) + '</p>';
+      if (t.startsWith("▶"))
+        return '<p class="item-top">' + linkifyHtml(escapeHtml(line)) + '</p>';
+      const lead = line.length - line.trimStart().length;
+      if (lead >= 2 && /^- ?/.test(t))
+        return '<p class="item-sub">' + linkifyHtml(escapeHtml(t)) + '</p>';
+      return '<p>' + linkifyHtml(escapeHtml(line)) + '</p>';
+    }).join("");
+  }
+
+  // 본문은 이미 이 파일 안에 포함되어 있으므로 외부 통신이 전혀 없다.
+  const raw = document.getElementById("raw").textContent;
+  document.getElementById("content").innerHTML = renderPlainText(raw);
+})();
+</script>
+</body>
+</html>
