@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>업무동향 브리핑 · 2026-11-13</title>
+<style>
+  :root{
+    /* 노트(종이) 테마 — 저시력 사용자도 편하게 읽을 수 있도록 고대비 우선 */
+    --bg: #f6f2e7;         /* 종이 바탕 */
+    --bg-raised: #fffdf7;  /* 카드/입력요소용 밝은 종이 */
+    --fg: #14100c;         /* 본문 검정 */
+    --fg-dim: #4a453e;     /* 보조 텍스트 (충분한 대비 유지) */
+    --rule: #d9d0ba;       /* 종이 괘선/구분선 */
+    --accent: #35507a;     /* 표식용 (텍스트 색상에는 쓰지 않음) */
+    --clear: #2f6b46;      /* 이상무 */
+    --active: #94620a;     /* 확인 필요 */
+
+    --font-display: 'Malgun Gothic', '맑은 고딕', Georgia, serif;
+    --font-body: 'Malgun Gothic', '맑은 고딕', -apple-system, sans-serif;
+    --font-mono: Consolas, 'Courier New', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html, body{ margin:0; padding:0; }
+  html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body{
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: inherit; }
+
+  .page{
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 22px 64px;
+  }
+
+  .kicker{
+    display:flex; align-items:center; gap:10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .kicker::before{
+    content:"";
+    width: 8px; height: 8px;
+    background: var(--accent);
+    display:inline-block;
+  }
+  h1{
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.18;
+    margin: 0 0 4px;
+  }
+  .sub{
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--fg-dim);
+    margin-bottom: 24px;
+  }
+  .meta{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-dim);
+    margin-bottom: 22px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ---------- 오늘의 신호 요약 (시그니처) ---------- */
+  .signal-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 26px;
+  }
+  .signal-chip{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 8px 12px;
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--fg-dim);
+    flex: 1 1 140px;
+  }
+  .signal-chip .dot{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex: none;
+    background: var(--fg-dim);
+  }
+  .signal-chip.clear{ border-left-color: var(--clear); }
+  .signal-chip.clear .dot{ background: var(--clear); }
+  .signal-chip.active{ border-left-color: var(--active); }
+  .signal-chip.active .dot{ background: var(--active); }
+  .signal-chip .label{ color: var(--fg); }
+  .signal-chip .status{ color: var(--fg-dim); margin-left: auto; white-space: nowrap; }
+
+  /* ---------- 달력 ---------- */
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  /* ---------- 본문 (노트 카드) ---------- */
+  .content{
+    position: relative;
+    font-size: 13pt;
+    line-height: 1.85;
+    white-space: normal;
+    color: var(--fg);
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 22px 20px 24px 30px;
+    overflow-wrap: anywhere;
+    overflow-x: hidden;
+    min-width: 0;
+  }
+  /* 노트 느낌: 왼쪽 여백선 */
+  .content::before{
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 18px;
+    width: 1px;
+    background: var(--rule);
+  }
+  .content p{
+    margin: 0;
+    /* 긴 URL 등이 박스를 벗어나지 않도록 강제 줄바꿈 */
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    min-width: 0;
+  }
+
+  /* 상위항목: 큰 분류 (📰 🏫 ⚖️ 📣) — 15pt, 굵게 */
+  .content p.section-head{
+    font-weight: 700;
+    font-size: 15pt;
+    color: var(--fg);
+    margin-top: 28px;
+    margin-bottom: 8px;
+    padding-left: 10px;
+    border-left: 4px solid var(--accent);
+  }
+  .content p.section-head:first-child{ margin-top: 0; }
+
+  /* 중위항목: 개별 사례 (▶ ...) — 13pt, 굵게 */
+  .content p.item-top{
+    font-weight: 600;
+    font-size: 13pt;
+    color: var(--fg);
+    margin-top: 14px;
+  }
+
+  /* 하위항목: 세부 내용 (  - ...) — 11pt, 보통 굵기, 들여쓰기 */
+  .content p.item-sub{
+    font-weight: 400;
+    font-size: 11pt;
+    color: var(--fg-dim);
+    padding-left: 1.4em;
+    margin-top: 2px;
+  }
+
+  .content p.item-top a,
+  .content p.item-sub a,
+  .content p a{
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .content p a:visited{ color: #6a4f8a; }
+  .content .divider{ height: 0; margin: 18px 0; border-top: 1px solid var(--rule); }
+  .content .footer-link{ background: var(--bg-raised); }
+
+  .footer-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 32px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-decoration: none;
+    padding: 9px 14px;
+    border: 1px solid var(--rule);
+    color: var(--fg);
+  }
+  .footer-link:hover{ border-color: var(--accent); color: var(--accent); }
+
+  .status{ font-family: var(--font-mono); font-size: 13px; padding: 14px 0; color: var(--fg-dim); }
+  .status.error{ color: #a3271e; }
+
+  
+  @keyframes pulse{ 0%,100%{ opacity: 0.5; } 50%{ opacity: 1; } }
+  @media (prefers-reduced-motion: reduce){ .skeleton{ animation: none; } }
+
+  @media (max-width: 480px){
+    .page{ padding: 30px 16px 48px; }
+    h1{ font-size: 25px; }
+    .signal-chip{ flex-basis: 100%; }
+  }
+
+  .page{ position: relative; }
+  @media (max-width: 480px){
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="kicker">업무동향 브리핑</div>
+  <h1>유초등특수교육과 업무동향</h1>
+  <div class="sub">뉴스 · 타시도 정책 · 법령동향 · 언론 모니터링</div>
+  <div class="meta">2026.11.13 (금)</div>
+
+  <div class="content" id="content">
+<pre id="raw" style="display:none">1. 📰 주요 동향
+
+▶ 기초학력 전담교사제 운영 실태 분석 공개 — 전담교사 배치 613개교 중 113개교(18.4%) 운영비 '0원', 학교당 지원액 최대 37.6배 격차
+  - 내용 : 국회 교육위원회 강경숙 의원과 좋은교사운동은 11. 12. '2026년 17개 시도교육청 기초학력 전담교사제 운영 실태 분석' 결과를 발표했다. 국정감사 회신자료와 2026학년도 운영계획을 대조한 결과 17개 시도 중 15개 시도가 제도를 운영하며, 613개교에 전담인력 674명(교원 653명, 기간제·강사 등 21명)이 배치돼 있다. 전담교사제 명목의 운영비가 전혀 없는 학교는 경북 83개교·세종 20개교·제주 10개교 등 113개교이고, 타 사업 예산을 전용하는 대전·대구를 포함하면 150개교(약 24.5%)가 별도 사업비 없이 운영된다. 학교당 운영비는 전북 677만 원이 최고, 대전 18만 원이 최저로 약 37.6배 차이가 났다. 15개 시도 중 7곳은 전담교사에게 기초학력 지도 외 업무를 맡기지 않도록 하는 규정을 운영계획에 명시하지 않았다. 서울은 2년 연속 전담교사를 배치하지 않았고 2027년 기초학력 전문교원 34명을 처음 배치할 예정이다. 의원실은 학교당 최소 운영비 200만 원 기준과 국가 차원 운영 가이드라인 마련을 촉구했다.
+  - 관련업무 : 초등장학팀(기초학력 보장 시행계획, 기초학력 전문교원, 기초학력 두드림학교, 시도 기초학력센터)
+  - 시사점 : 전북이 학교당 운영비 전국 최고로 적시돼 부정적 지적 대상은 아니나, 교육부가 최소 운영비 기준과 업무분장 가이드라인을 마련할 경우 전북 운영계획의 '지도 외 업무 배제' 명시 여부와 산정 근거를 설명할 수 있어야 함.
+  - 링크 : https://www.te.co.kr/news/article.html?no=29612
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▶ 한국교육개발원, 농촌 초등 학령인구 감소가 지방 중소도시로 확산 — 전국 229개 시군구 6개 유형 분류
+  - 내용 : 한국교육개발원(KEDI)은 11. 12. 2014~2023년 전국 229개 시·군·구의 초등 학령인구 이동을 분석한 보고서를 발간했다. 지역을 6개 유형으로 나눈 결과 농촌형 감소 지역이 57곳으로 감소세가 가장 심각했고, 지방 중·소도시형 감소 지역 52곳은 그간 인근 농촌 학생을 흡수해 감소를 완충해 왔으나 그 기능이 약해지고 있다. 중소도시 유입 초등 학령인구 중 농촌 출신 비율은 분석 기간 약 1~2%포인트 감소했다. 도시형 감소 지역은 73곳이며 이 중 48곳이 특별·광역시의 구다. 연구진은 출산율 회복만으로는 학생 수 감소를 막기 어렵다고 보고, 시·군·구별 맞춤 정책과 광역 단위 대응을 제언했다.
+  - 관련업무 : 유아교육과정팀(소규모 유치원 공동교육과정, 한울타리유치원), 초등교육과정팀(초등 교육과정 편성·운영), 유보통합팀(돌봄기관 시범사업)
+  - 시사점 : 전북은 농촌형 감소 지역과 지방 중소도시가 함께 있어 '시군 단위 거점 확충'만으로는 완충 효과를 기대하기 어려우므로, 소규모 유치원 공동교육과정·한울타리유치원 권역 설계 시 시군 경계를 넘는 광역 단위 배치를 검토할 필요가 있음.
+  - 링크 : https://www.edpl.co.kr/news/articleView.html?idxno=22053
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▶ 경기도의회 행정사무감사, 미취학 아동 647명 관리 부실 지적 — "전담기구 2년간 미개최, 소재확인이 전화 통화에 그쳐"
+  - 내용 : 경기도의회 박순희 의원은 11. 12. 행정사무감사에서 용인 지역 미취학 아동이 초등 569명·중학교 78명 등 647명이고, 장기 미인정 결석 학생 600명 이상 중 집중관리 대상이 300명을 넘는다고 밝혔다. 취학관리전담기구는 2023년 1회 개최 후 2024~2025년 한 차례도 열리지 않다가 2026년 6월에야 열렸고, 행정자료상 소재 확인은 100% 완료로 기록됐으나 실제로는 전화 통화에 그친 사례와 3월 중순 이후 6월 초까지 관리 기록이 끊긴 사례가 확인됐다. 박 의원은 교육지원청·지자체·경찰·아동보호전문기관·Wee센터의 정보 공유와 합동 현장점검 체계, 집중관리 아동의 점검 주기·절차 체계화를 제안했다. 취학 유예 아동은 53명이다.
+  - 관련업무 : 학사지원팀(의무교육단계 미취학 아동·장기 미인정 결석 관리), 초등교육과정팀(학사관리)
+  - 시사점 : 취학통지서 발송(12. 3.~20.)과 입학 연기 신청 마감(12. 31.)을 앞둔 시기이므로, 도내 취학관리전담기구 개최 실적과 소재·안전 확인 방법(유선 확인 비중)을 사전 점검해 행정사무감사 및 신학기 대비 자료로 정리해 둘 필요가 있음.
+  - 링크 : https://www.newssunday.co.kr/news/view.php?no=256088
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▶ 핀란드, 남학생 기초학력 저하·사회적 소외 대응 범정부 실무그룹 구성
+  - 내용 : 핀란드 교육문화부는 11. 6.(현지시간) 사회보건부와 공동으로 남학생·청년 남성의 사회적 배제를 예방하기 위한 실무그룹을 구성한다고 발표했다. 남학생의 문해력 부족과 낮은 기초학력이 상급학교 진학·취업 곤란으로 이어진다고 보고 교육과 복지·보건 정책을 연계하는 것이 골자다. 실무그룹은 학교와 사회·보건 서비스가 남학생의 어려움을 조기에 발견하는지 점검하고, 기존 지원정책의 효과를 검토하며, 남학생 복지 상태를 파악할 지표를 마련해 개선안을 제안한다. 라우라 리사넨 국무장관이 위원장을 맡아 2027. 2. 28.까지 활동한다. 교육부 장관은 "학습 수준이 낮은 학생의 대다수가 남학생"이라고 밝혔다.
+  - 관련업무 : 초등장학팀(기초학력 보장, 학습지원대상학생 지원협의회, 초등 한글책임교육)
+  - 시사점 : 기초학력 미도달의 성별 편중을 별도 지표로 관리하는 접근은 전북 기초학력 진단·향상도 검사 결과 분석에 바로 적용 가능하며, 학습지원대상학생 지원협의회에 복지·보건 자원 연계를 더하는 설계의 참고 사례가 됨.
+  - 링크 : https://www.edpl.co.kr/news/articleView.html?idxno=22061
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2. 🏫 타시도 정책 참고
+
+▶ 경기도연천교육지원청 · 2026 방과후·돌봄 역량강화 및 지역협력 워크숍(경기·인천·강원 연계)
+  - 내용 : 11. 12.~13. 강원 화천군·춘천시 일원에서 연천 관내 초등학교 교장, 연천교육지원청 관계자, 늘봄전담실장, 인천 옹진군 방과후돌봄지원센터 담당자가 함께 참여하는 워크숍을 운영했다. 1일차는 화천 커뮤니티센터에서 지자체·교육지원청 협력형 돌봄 사례를 살펴보고 공간·프로그램 운영, 예산·인력 지원, 기관별 역할 분담을 논의했으며, 연천과 옹진의 운영 현황을 교차 발표해 접경·도서지역의 이동 여건과 소규모학교 특성을 반영한 지원 방안을 검토했다. 2일차는 춘천교육대학교 앵커사업단을 방문해 늘봄프로그램과 독서·예술·스포츠(RAS) 연계 방과후돌봄 페스티벌 사례를 확인했다.
+  - 적용점 : 같은 시도 안에서만 사례를 나누는 방식이 아니라, 지리적 여건이 비슷한 타 시도 기초지자체 담당자와 짝을 지어 교차 연수를 하는 구조가 특징임. 전북의 산간(무주·진안·장수)·도서(군산 도서지역) 소규모학교 늘봄을 같은 여건의 타 시도 지역과 묶어 교차 워크숍으로 설계하면, 교통취약지역 학생 참여 확대와 방학·주말 돌봄 공백이라는 공통 과제의 해법을 동시에 검토할 수 있음.
+  - 링크 : https://vision21.kr/news/article.html?no=639261
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▶ 충청남도 청양교육지원청 · 초등 특수교육대상학생 직업전환 및 진로교육
+  - 내용 : 11. 9.과 11. 11. 청양특수교육지원센터에서 관내 초등 특수교육대상학생을 대상으로 '2026학년도 직업전환 및 진로교육'을 운영했다. '고체 샴푸 만들기' 친환경 공예 활동을 주제로, 재료를 반죽하고 원하는 모양으로 빚어 작품을 완성하는 과정에서 창의적 표현력과 성취감을 기르고, 생활용품의 다양한 형태와 친환경 소비를 이해하도록 구성했다. 재료를 나누고 작품을 감상하며 의사소통과 사회적 상호작용을 경험하도록 설계했다.
+  - 적용점 : 진로직업교육을 중·고등 전공과·학교기업 중심이 아니라 초등 단계에서 특수교육지원센터가 직접 운영하는 형태임. 전북 특수교육지원센터의 순회교육·치료지원 중심 기능에 초등 대상 체험형 진로 프로그램을 추가하면, 중학교 자유학기제 진입 전 진로 경험의 공백을 메울 수 있음.
+  - 링크 : https://www.ccdailynews.com/news/articleView.html?idxno=2451039
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▶ 전라남도 담양교육지원청 · 하반기 교육지원청 유·초이음교육 연수
+  - 내용 : 11. 11. 담양교육지원청에서 관내 유치원 교사를 대상으로 유·초 교육과정 연계 수업 설계와 실천사례를 공유하는 연수를 운영했다. 유·초이음교육 연구학교를 운영한 사창유치원 교사와 사창초등학교 교사를 함께 강사로 초빙해 유치원과 초등학교 양측 관점을 한 자리에서 제시한 것이 특징이다. 유치원 교사는 누리과정을 별도 프로그램이 아니라 초등교육과정과의 연계로 운영해야 한다고 강조했고, 초등 교사는 초등학교 교과서를 함께 살펴보며 교육과정을 재구성하는 방법을 안내했다.
+  - 적용점 : 연구학교의 유치원 교사와 초등 교사를 '2인 1조 강사'로 배치하는 방식은 전북 5세 이음교육 연수에 바로 적용할 수 있음. 유치원 교사만 참여하는 연수 대신 초등 1학년 담임을 함께 대상으로 하면 학교급 전환기 진로연계교육과도 연결됨.
+  - 링크 : https://www.gnnnews.kr/217781
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3. ⚖️ 법령·조례 동향
+
+▶ 「전북특별자치도교육청 행정기구 설치 조례」 일부개정조례안(조항 미확인)
+  - 내용 : 전북특별자치도의회 교육위원회는 11. 12. 도교육청이 제출한 행정기구 설치 조례 일부개정안을 질의 없이 부결했다. 개정안은 지역교육청 설치·폐지·통합·분리 시 주민·학부모·교직원 의견을 듣도록 하는 조항(「지방교육자치에 관한 법률」 제34조제3항 신설 반영)을 두고, 정책국 사무를 '국제교류'에서 '국제교육'으로 변경하며 학생 맞춤 통합지원·학교자치 업무를 정비하고, 교육국 사무 중 '교원 능력 개발'을 '교원 역량 개발'로 바꾸면서 민주시민교육과 인성·인권 업무를 삭제(각각 정책국·교육인권센터로 이관)하는 내용이다. 박수형 의원은 사전 입법예고 기간 미준수와 삭제되는 업무의 이관 부서 미확정을 부결 사유로 들었다. 연구진은 사무 177건 이관과 본청 인력 80명 안팎 재배치안을 설명한 바 있다.
+  - 영향 : 조직개편 근거 조례가 부결되면서 본청 사무 이관 일정이 지연될 가능성이 있어, 우리 과 사무의 이관·존치 여부와 인력 배치 변동 시점을 다시 확인해야 한다.
+  - 링크 : https://edujb.com/news/articleView.html?idxno=9840
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4. 📣 전북 지역 보도
+
+▶ 전북교육청, 2026 초등 수업나눔 실천 사례 나눔 개최 — 초등교원 120여 명 참여 · 전북미래교육신문, 투데이안
+  - 논조 : 호의적. 수업공개를 평가나 보여주기가 아닌 학생의 배움 중심 문화로 정착시키려는 취지와 현장 교사 발표 내용을 그대로 전달하고 비판적 언급이 없음.
+  - 대응 : 대응 불필요. 다만 전주문학초(전문적 학습공동체)·춘포초(매월 교실 개방)·정우초(수업 영상 피드백) 사례를 수업공개·나눔 실천학교 확산 자료로 정리해 둘 만함.
+  - 링크 : https://edujb.com/news/articleView.html?idxno=9845
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▶ 전북교육청·순창군 교육협력 간담회, 면 지역 작은도서관·마을회관을 늘봄 거점으로 활용 논의 · 전북미래교육신문
+  - 논조 : 중립. 11. 12. 교육감 시군방문 간담회에서 논의된 전북유학생 정착 지원 방안(순창 유학생 2022년 4명→올해 99명, 운영 학교 1곳→11곳)과 돌봄·주거 지원 제안을 사실 위주로 전달함.
+  - 대응 : 대응 불필요. 다만 돌봄센터 미설치 면 지역에 작은도서관·마을회관을 거점으로 발굴하는 방안은 학교 밖 공간의 안전·인력 기준 검토가 선행돼야 하므로, 늘봄 담당과 사전 협의 사항을 정리할 필요가 있음.
+  - 링크 : https://edujb.com/news/articleView.html?idxno=9842
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▶ 전북교육청, 2026 인성교육 실천 나눔의 날 운영 — 유·초·중·고·특수 교원 150여 명 참여 · 투데이안
+  - 논조 : 호의적. 11. 6.과 11. 12. 전주 치명자산성지 평화의전당에서 초등·중등 분과로 나눠 진행한 학교별 실천사례 발표와 교사 협의 내용을 사실 위주로 전달함.
+  - 대응 : 대응 불필요. 전주초포초('We-Planner로 책임 있게 성장하는 우리')·황등남초('3-STEP 미래 인성 프로젝트') 등 초등 사례는 인성교육이 일회성 행사가 아닌 일상 실천으로 이어지도록 하는 학교 단위 지원 과제와 함께 정리해 둘 만함.
+  - 링크 : https://www.todayan.com/news/articleView.html?idxno=637065
+</pre>
+  </div>
+</div>
+
+<script>
+(function(){
+  const SECTIONS = ["📰", "🏫", "⚖️", "📣"];
+
+  function escapeHtml(str){
+    return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+              .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+
+  function linkifyHtml(escapedLine){
+    return escapedLine.replace(/(https?:\/\/[^\s<]+)/g, function(url){
+      const m = url.match(/[),.:;!?]+$/);
+      const trailing = m ? m[0] : "";
+      const clean = trailing ? url.slice(0, -trailing.length) : url;
+      return '<a href="' + clean + '" target="_blank" rel="noopener noreferrer">' + clean + '</a>' + trailing;
+    });
+  }
+
+  function renderPlainText(raw){
+    return raw.replace(/\r\n/g, "\n").split("\n").map(function(line){
+      const t = line.trim();
+      if (t === "") return '<div class="blank"></div>';
+      if (/^[━─=-]{5,}$/.test(t)) return '<div class="divider"></div>';
+      if (SECTIONS.some(function(e){ return t.startsWith(e); }))
+        return '<p class="section-head">' + escapeHtml(line) + '</p>';
+      if (t.startsWith("▶"))
+        return '<p class="item-top">' + linkifyHtml(escapeHtml(line)) + '</p>';
+      const lead = line.length - line.trimStart().length;
+      if (lead >= 2 && /^- ?/.test(t))
+        return '<p class="item-sub">' + linkifyHtml(escapeHtml(t)) + '</p>';
+      return '<p>' + linkifyHtml(escapeHtml(line)) + '</p>';
+    }).join("");
+  }
+
+  // 본문은 이미 이 파일 안에 포함되어 있으므로 외부 통신이 전혀 없다.
+  const raw = document.getElementById("raw").textContent;
+  document.getElementById("content").innerHTML = renderPlainText(raw);
+})();
+</script>
+</body>
+</html>
